@@ -1,0 +1,61 @@
+{
+  "commandName": "score",
+  "commandData": {
+    "score": {
+      "id": 0, //Score ID (float)
+      "leaderboardPlayerInfo": {
+        "id": "0", //UserID (float)
+        "name": "Name", //User Name (String)
+        "profilePicture": "", //ProfilePicture (URL-string)
+        "country": "", //Profile Country (string)
+        "permissions": 0, //Profile Permissions (float)
+        "badges": "", //Profile Badges (array) "badges": [{"image": "","description": ""},{"image": "","description": ""}]
+        "role": null //Profille Role (array)
+      },
+      "rank": 0, //Map rank (float)
+      "baseScore": 0, //Map Score (float)
+      "modifiedScore": 0, //Map Score (float)
+      "pp": 0, //PP Gained (float)
+      "weight": 0, //Weighted PP Gained (float)
+      "modifiers": "", //Modfiers (string)
+      "multiplier": 0, //Multiplier (float)
+      "badCuts": 0, //Bad Cuts (float)
+      "missedNotes": 0, //Missed Notes (float)
+      "maxCombo": 0, //Max combo (float)
+      "fullCombo": false, //Full combo (bool)
+      "hmd": 0, //HMD ID [0 = Unknown, 1 = CV1, 2 = Vive, 4 = Vive Pro, 8 = WMR, 16 = Rift S, 32 = Oculus Quest, 64 = Valve Index, 128 = Vive Cosmos] (float)
+      "timeSet": "2001-01-01T01:01:01.000Z", //Timestamp (timestamp)
+      "hasReplay": false //Replay available (bool)
+    },
+    "leaderboard": {
+      "id": 0, //(float)
+      "songHash": "", //Map-hash (strong)
+      "songName": "", //Map name (string)
+      "songSubName": "", //Map subname (string)
+      "songAuthorName": "", //Song author (string)
+      "levelAuthorName": "", //Map author (string)
+      "difficulty": {
+        "leaderboardId": 0, //Leaderboard ID (float)
+        "difficulty": 0, //Map diff (float) [1 = Easy, 3 = Normal, 5 = Hard, 7 = Expert, 9 = ExpertPlus]
+        "gameMode": "Standard",  //Gamemode (string)
+        "difficultyRaw": "" //Raw diw (string: _DIFF_gamemode)
+      },
+      "maxScore": 0,
+      "createdDate": "2020-08-06T16:56:31.000Z", //Map creation date (timestamp)
+      "rankedDate": "2021-09-27T12:59:07.000Z", //Map ranked date (timestamp)
+      "qualifiedDate": "2021-09-16T18:18:03.000Z", //Map qualified date (timestamp)
+      "lovedDate": null, //Map loved date (timestamp)
+      "ranked": false, //Is mapped ranked (bool)
+      "qualified": false, //Is mapped qualified (bool)
+      "loved": false, //Is mapped loved (bool)
+      "maxPP": 0, //Max possible PP (float)
+      "stars": 0, //Star rating (float)
+      "plays": 0, //Amount of plays (float)
+      "dailyPlays": 0, //Daily plays (float)
+      "positiveModifiers": false, //modifiers (bool)
+      "playerScore": null, //Uknown?
+      "coverImage": "URL", //Cover image (URL-string)
+      "difficulties": null //Uknown?
+    }
+  }
+}
