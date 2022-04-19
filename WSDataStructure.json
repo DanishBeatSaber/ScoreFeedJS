@@ -9,7 +9,7 @@
         "profilePicture": "", //ProfilePicture (URL-string)
         "country": "", //Profile Country (string)
         "permissions": 0, //Profile Permissions (float)
-        "badges": "", //Profile Badges (array) "badges": [{"image": "","description": ""},{"image": "","description": ""}]
+        "badges": "", //Profile Badges (array) [image: "","description": ""]
         "role": null //Profille Role (array)
       },
       "rank": 0, //Map rank (float)
