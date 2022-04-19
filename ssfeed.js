@@ -90,7 +90,8 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 	if (jsonObj.commandName === "score") /*Check for command*/ {
 		if (jsonObj.commandData.score.leaderboardPlayerInfo.country == "DK") /*Check if Danish */{			
 			if (jsonObj.commandData.score.rank <= 75 || jsonObj.commandData.score.weight >= 0.4903952634930577) /*Check if user is top100 on map */ {
-                if (jsonObj.commandData.leaderboard.ranked == true) /*Check if score is on ranked map */ {
+				if (jsonObj.commandData.score.modifiers == "") /*Check if user is using modifier */ {
+					if (jsonObj.commandData.leaderboard.ranked == true) /*Check if score is on ranked map */ {
 						var id = jsonObj.commandData.score.leaderboardPlayerInfo.id; //User ID
 						var name =  jsonObj.commandData.score.leaderboardPlayerInfo.name; //Username
 						var pfp =  jsonObj.commandData.score.leaderboardPlayerInfo.profilePicture; //Profilepicture
@@ -165,6 +166,7 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,beatsaver); //Send message to Discord
 							})
 						});	
+					}
 				}
 			}
 		} 
