@@ -1,4 +1,3 @@
-
 function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,beatsaver) {
 	var id = id; //id
 	var name = name; //name
@@ -54,7 +53,7 @@ var myEmbed = { //Create Embed
 			inline: true, //Inline
 		},
 		{
-			name: 'PP:', //Field Name
+			name: 'PP: (Weighted PP)', //Field Name
 			value: "```"+pp.toFixed(2)+"pp ["+(pp*weight).toFixed(2)+"pp]```", //Field Value
 			inline: true, //Inline
 		},
@@ -87,11 +86,12 @@ console.log("WE ARE CONNECTED BOIS"); // log that the connection was made
 
 TAsock.onmessage = async function(event) { // event.data is the message
 jsonObj = JSON.parse(event.data); // parse the message as JSON
+
 	if (jsonObj.commandName === "score") /*Check for command*/ {
 		if (jsonObj.commandData.score.leaderboardPlayerInfo.country == "DK") /*Check if Danish */{			
 			if (jsonObj.commandData.score.rank <= 100) /*Check if user is top100 on map */ {
-                		if (jsonObj.commandData.leaderboard.ranked == true) /*Check if score is on ranked map */ {
-					if (jsonObj.commandData.score.weight >= "0.4903952634930577") /*Check if score is weighted high enough */ {
+				if (jsonObj.commandData.leaderboard.ranked == true) /*Check if score is on ranked map */ {
+					if (jsonObj.commandData.score.weight >= 0.4903952634930577) /*Check if score is weighted high enough */ {
 						var id = jsonObj.commandData.score.leaderboardPlayerInfo.id; //User ID
 						var name =  jsonObj.commandData.score.leaderboardPlayerInfo.name; //Username
 						var pfp =  jsonObj.commandData.score.leaderboardPlayerInfo.profilePicture; //Profilepicture
