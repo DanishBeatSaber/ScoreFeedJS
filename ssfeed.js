@@ -22,6 +22,20 @@ function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNote
 	var coverImage = coverImage; //coverImage
 	var acc = acc; //acc
 	var beatsaver = beatsaver; //beatsaver
+	
+	if (rank == 1) { //If rank 1
+		var color = "#FFD700";
+	 } else if (rank == 2) { //If rank 2
+		var color = "#C0C0C0";
+	 } else if (rank == 3) { //If rank 3
+		var color = "#CD7F32";
+	 } else if (rank >= 4 && rank <= 10) { //If between rank 4-10
+		var color = "#E970F5";
+	 } else if (rank >= 11 && rank <= 25) { //If between rank 11-25
+		var color = "#40E0D0";
+	 } else if (rank >= 26) { //If above rank 26
+		var color = "#E04050";
+	}
 
 const request = new XMLHttpRequest(); // Create a request
 request.open("POST", "WEBHOOK HERE"); //Set Webhook
@@ -40,7 +54,7 @@ var myEmbed = { //Create Embed
 	type: "rich", //Type
 	description: "Map rank: **#"+rank+"**", //Description
 	url: "https://scoresaber.com/leaderboard/"+leaderboardId, //URL
-	color: hexToDecimal("#ff0000"), //Color
+	color: hexToDecimal(color), //Color
 	footer: { //Footer
 	text: name + " - "+hmd+" - Global: "+ur+" - Local: "+cr, //Footer Text
 	icon_url: pfp, //Footer Icon
