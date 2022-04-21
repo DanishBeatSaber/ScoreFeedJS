@@ -8,7 +8,7 @@
         "name": "Name", //User Name (String)
         "profilePicture": "", //ProfilePicture (URL-string)
         "country": "", //Profile Country (string)
-        "permissions": 0, //Profile Permissions (float)
+        "permissions": 0, //Profile Permissions (array) [0,0,0]
         "badges": "", //Profile Badges (array) [image: "","description": ""]
         "role": null //Profille Role (array)
       },
