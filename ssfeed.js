@@ -107,7 +107,7 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 
 	if (jsonObj.commandName === "score") /*Check for command*/ {
 		if (jsonObj.commandData.score.leaderboardPlayerInfo.country == "DK") /*Check if Danish */{			
-			if (jsonObj.commandData.score.rank <= 75 || jsonObj.commandData.score.weight >= 0.4903952634930577) /*Check if user is top100 on map */ {
+			if (jsonObj.commandData.score.rank <= 51 || jsonObj.commandData.score.weight >= 0.4903952634930577) /*Check if user is top100 on map */ {
 				if (jsonObj.commandData.score.modifiers == "") /*Check if user is using modifier */ {
 					if (jsonObj.commandData.leaderboard.ranked == true) /*Check if score is on ranked map */ {
 						var id = jsonObj.commandData.score.leaderboardPlayerInfo.id; //User ID
