@@ -181,7 +181,10 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 							var cr = data2.playerInfo.countryRank; //Set cr to player country rank
 							//console.log(ur); //Log ur
 							//console.log(cr); //Log cr
-								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,beatsaver); //Send message to Discord
+								
+								if (acc >= 86.9) {
+									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,beatsaver); //Send message to Discord
+								}
 							})
 						});	
 					}
