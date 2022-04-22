@@ -24,17 +24,19 @@ function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNote
 	var beatsaver = beatsaver; //beatsaver
 	
 	if (rank == 1) { //If rank 1
-		var color = "#FFD700";
+		var color = "#FFC700";
 	 } else if (rank == 2) { //If rank 2
-		var color = "#C0C0C0";
+		var color = "#AAAAAA";
 	 } else if (rank == 3) { //If rank 3
-		var color = "#CD7F32";
+		var color = "#954500";
 	 } else if (rank >= 4 && rank <= 10) { //If between rank 4-10
-		var color = "#E970F5";
+		var color = "#E91E63";
 	 } else if (rank >= 11 && rank <= 25) { //If between rank 11-25
-		var color = "#40E0D0";
-	 } else if (rank >= 26) { //If above rank 26
-		var color = "#E04050";
+		var color = "#CA00FF";
+	 } else if (rank >= 26 && rank <= 50) { //If above rank 26
+		var color = "#04D3F8";
+	 } else if (rank >= 51 && rank <= 100) { //If above rank 26
+		var color = "#2ECC71";
 	}
 
 const request = new XMLHttpRequest(); // Create a request
