@@ -37,6 +37,8 @@ function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNote
 		var color = "#04D3F8";
 	 } else if (rank >= 51 && rank <= 100) { //If above rank 26
 		var color = "#2ECC71";
+	 } else if (rank >= 101) {
+		var color = "#9CFFF4";
 	}
 
 const request = new XMLHttpRequest(); // Create a request
