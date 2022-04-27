@@ -197,49 +197,61 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 						songDiff = "ExpertPlus";
 						break;
 				}
-							
-				fetch('https://new.scoresaber.com/api/player/'+id+'/basic') //Fetch player info from scoresaber
-				.then(response => response.json()) //Parse response
-				.then(data2 => {
-					if (data2.hasOwnProperty('playerInfo')){
-						var ur = data2.playerInfo.rank; //Set ur to player rank
-						var cr = data2.playerInfo.countryRank; //Set cr to player country rank
-					} else {
-						var ur = 0;
-						var cr = 0;
+
+				async function getRank(id) {
+					try {
+						const response = await fetch("https://new.scoresaber.com/api/player/"+id+"/basic");
+						const data = await response.json();
+						var rank = data.playerInfo.rank;
+						var countryRank = data.playerInfo.countryRank;
+						return [rank, countryRank];
+					} catch (error) {
+						console.log(error);
+						return [0, 0];
 					}
-					
-					/*Default ScoreFeed*/
-					if (ranked) /*Check if score is on ranked map */ {
-						if (rank <= process.env.SS_MAPRANK || weight >= process.env.SS_PPWeight) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {	
-							if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
-								
-								console.log(id+" "+acc+" "+songDiff);
-								if (acc >= process.env.BS_ACC)  /*Check if user acc is above set acc-requirement */ {
+				}
+				
+				/*Default ScoreFeed*/
+				if (ranked) /*Check if score is on ranked map */ {
+					if (rank <= process.env.SS_MAPRANK || weight >= process.env.SS_PPWeight) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {	
+						if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
+							if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
+								getRank(id).then(function(result) {
+									ur = result[0];
+									cr = result[1];
+									console.log(id+" "+acc+" "+songDiff);
 									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
-								}
+								});
 							}
 						}
 					}
+				}
 					
-					/* This can be removed */
-					if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F") /* Check if user passed FF9 */ {
-						if (country == process.env.SS_COUNTRY) /*Check if Danish */{	
-								console.log(id+" "+acc+" "+songDiff);
-								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
-						}
+				/* This can be removed */
+				if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F" && !ranked) /* Check if user passed FF9 */ {
+					if (country == process.env.SS_COUNTRY) /*Check if Danish */{	
+						getRank(id).then(function(result) {
+							ur = result[0];
+							cr = result[1];
+							console.log(id+" "+acc+" "+songDiff);
+							sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
+						});
 					}
+				}
 							
-					if (ranked) /*Check if score is on ranked map */ {
-						if (country !== process.env.SS_COUNTRY) /*Check if not Danish potato */{
-							if (acc == 69)  /*Check if very nice acc */{
+				if (ranked) /*Check if score is on ranked map */ {
+					if (country !== process.env.SS_COUNTRY) /*Check if not Danish potato */{
+						if (acc == 69)  /*Check if very nice acc */{
+							getRank(id).then(function(result) {
+								ur = result[0];
+								cr = result[1];
 								console.log(id+" "+acc+" "+songDiff);
 								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
-							}
+							});
 						}
 					}
-					/* Down to here, just for fun stuff for Dane Saber */
-				});
+				}
+				/* Down to here, just for fun stuff for Dane Saber */
 			}
 		}
 	}
