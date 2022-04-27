@@ -1,7 +1,16 @@
 # ScoreFeedJS
-The Scorefeed-code for #score-feed on Dane Saber Discord
+The Scorefeed-code for #scores-feed on Dane Saber Discord
 
 
 Suggestions? Fire away.
 
 Check WebSocket data-structure in [The file](https://github.com/DSBeatSaber/ScoreFeedJS/blob/main/WSDataStructure.json)
+
+
+# How to run
+
+Run `npm install` in `ScoreFeed`
+
+Configure `.env` in `ScoreFeed`
+
+Run `npm start` in `ScoreFeed`
