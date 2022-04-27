@@ -4,7 +4,7 @@ The Scorefeed-code for #scores-feed on Dane Saber Discord
 
 Suggestions? Fire away.
 
-Check WebSocket data-structure in [The file](https://github.com/DSBeatSaber/ScoreFeedJS/blob/main/WSDataStructure.json)
+Check WebSocket data-structure in [the structure-file](https://github.com/DSBeatSaber/ScoreFeedJS/blob/main/WSDataStructure.json)
 
 
 # How to run
