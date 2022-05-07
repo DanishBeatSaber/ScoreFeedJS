@@ -215,11 +215,12 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				if (ranked) /*Check if score is on ranked map */ {
 					if (rank <= process.env.SS_MAPRANK || weight >= process.env.SS_PPWeight) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {	
 						if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
+							console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff);
 							if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
 								getRank(id).then(function(result) {
 									ur = result[0];
 									cr = result[1];
-									console.log(id+" "+acc+" "+songDiff);
+									console.log("Above score got submitted.");
 									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
 								});
 							}
@@ -229,11 +230,12 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 					
 				/* This can be removed */
 				if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F" && !ranked) /* Check if user passed FF9 */ {
+					console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff);
 					if (country == process.env.SS_COUNTRY) /*Check if Danish */{	
 						getRank(id).then(function(result) {
 							ur = result[0];
 							cr = result[1];
-							console.log(id+" "+acc+" "+songDiff);
+							console.log("Above score got submitted.");
 							sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
 						});
 					}
@@ -242,10 +244,11 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				if (ranked) /*Check if score is on ranked map */ {
 					if (country !== process.env.SS_COUNTRY) /*Check if not Danish potato */{
 						if (acc == 69)  /*Check if very nice acc */{
+						console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff);
 							getRank(id).then(function(result) {
 								ur = result[0];
 								cr = result[1];
-								console.log(id+" "+acc+" "+songDiff);
+									console.log("Above score got submitted.");
 								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
 							});
 						}
@@ -256,3 +259,12 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 		}
 	}
 };
+
+TAsock.onclose = function(){
+  console.log('WebSocket closed down.');
+  // console.log(event);
+}
+
+setInterval(function() {
+    TAsock.ping('Ping!');
+}, 120000); // 60 * 1000 milsec
