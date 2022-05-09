@@ -103,10 +103,11 @@ function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNote
 	}
 }
 
-var TAsock = new WebSocket("wss://scoresaber.com/ws"); // Open WebSocket to ScoreSaber
-TAsock.onopen = function(event) { //When socket is open, do this
-console.log("WE ARE CONNECTED BOIS"); // log that the connection was made
-};
+function connect() {
+	var TAsock = new WebSocket("wss://scoresaber.com/ws"); // Open WebSocket to ScoreSaber
+	TAsock.onopen = function(event) { //When socket is open, do this
+	console.log("WE ARE CONNECTED BOIS"); // log that the connection was made
+	};
 
 TAsock.onmessage = async function(event) { // event.data is the message
 if (event.data !== "Connected to the ScoreSaber WSS") {
@@ -260,11 +261,21 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 	}
 };
 
-TAsock.onclose = function(){
-  console.log('WebSocket closed down.');
-  // console.log(event);
-}
+TAsock.onclose = function(e) {
+  console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+  setTimeout(function() {
+    connect();
+  }, 1000);
+};
+
+ TAsock.onerror = function(err) {
+   console.error('Socket encountered error: ', err.message, 'Closing socket');
+  TAsock.close();
+ };
 
 setInterval(function() {
     TAsock.ping('Ping!');
 }, 120000); // 60 * 1000 milsec
+
+}
+connect();
