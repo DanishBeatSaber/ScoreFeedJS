@@ -5,7 +5,7 @@ const WebSocket = require('ws');
 const fetch = require('node-fetch');
 const XMLHttpRequest = require('xhr2');
 
-function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc) {
+function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc) {
 	var id = id; //id
 	var name = name; //name
 	var pfp = pfp; //pfp
@@ -28,6 +28,10 @@ function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNote
 	var maxScore = maxScore; //maxScore
 	var coverImage = coverImage; //coverImage
 	var acc = acc; //acc
+	var mapId = mapId;
+	var replayDisabled = "";
+	
+	if (rank > 500) { replayDisabled = true; } else { replayDisabled = false;}
 	
 	if (rank == 1) { //If rank 1
 		var color = "#FFC700";
@@ -88,11 +92,61 @@ function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNote
 			}
 		]
 	}
+	var myComponents = {      
+	 type: 1,
+       components: [
+        {
+          style: 5,
+          label: 'Player',
+          url: 'https://scoresaber.com/u/'+id,
+          disabled: false,
+          emoji: {
+            id: null,
+            name: '👱'
+          },
+          type: 2
+        },
+        {
+          style: 5,
+          label: 'Leaderboard',
+          url: 'https://scoresaber.com/leaderboard/'+leaderboardId,
+          disabled: false,
+          emoji: {
+            id: null,
+            name: '📈'
+          },
+          type: 2
+        },
+        {
+          style: 5,
+          label: 'Beat Saver',
+          url: 'https://beatsaver.com/maps/'+mapId,
+          disabled: false,
+          emoji: {
+            id: null,
+            name: '🗺'
+          },
+          type: 2
+        },
+        {
+          style: 5,
+          label: 'Replay',
+          url: 'https://www.replay.beatleader.xyz/?id='+mapId+'&difficulty='+difficulty+'&playerID='+id,
+          disabled: replayDisabled,
+          emoji: {
+            id: null,
+            name: '⏪'
+          },
+          type: 2
+        }
+      ]
+	}
 	var params = { //Create Params
 		tts: false, //TTS
 		username: process.env.DISCORD_USERNAME, //Username
 		avatar_url: process.env.DISCORD_PROFILEPICTURE, //Avatar URL
-		embeds: [myEmbed] //Embeds
+		embeds: [myEmbed], //Add embeds to message
+		components: [myComponents] //Add components to message
 	}
 
 	request.send(JSON.stringify(params)); //Send Params
@@ -212,17 +266,31 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 					}
 				}
 				
+				async function getBeatSaverId(hash) {
+					try {
+						const response = await fetch("https://api.beatsaver.com/maps/hash/"+hash);
+						const data = await response.json();
+						var id = data.id;
+						return id;
+					} catch (error) {
+						console.log(error);
+						return 0;
+					}
+				}
+				
+				let mapId = await getBeatSaverId(songHash);
+				
 				/*Default ScoreFeed*/
 				if (ranked) /*Check if score is on ranked map */ {
 					if (rank <= process.env.SS_MAPRANK || weight >= process.env.SS_PPWeight) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {	
 						if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
-							console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff);
+							console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
 							if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
 								getRank(id).then(function(result) {
 									ur = result[0];
 									cr = result[1];
 									console.log("Above score got submitted.");
-									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
+									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
 								});
 							}
 						}
@@ -231,13 +299,13 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 					
 				/* This can be removed */
 				if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F" && !ranked) /* Check if user passed FF9 */ {
-					console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff);
+					console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
 					if (country == process.env.SS_COUNTRY) /*Check if Danish */{	
 						getRank(id).then(function(result) {
 							ur = result[0];
 							cr = result[1];
 							console.log("Above score got submitted.");
-							sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
+							sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
 						});
 					}
 				}
@@ -245,12 +313,12 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				if (ranked) /*Check if score is on ranked map */ {
 					if (country !== process.env.SS_COUNTRY) /*Check if not Danish potato */{
 						if (acc == 69)  /*Check if very nice acc */{
-						console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff);
+						console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
 							getRank(id).then(function(result) {
 								ur = result[0];
 								cr = result[1];
-									console.log("Above score got submitted.");
-								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
+								console.log("Above score got submitted.");
+								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
 							});
 						}
 					}
