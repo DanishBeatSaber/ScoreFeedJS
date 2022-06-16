@@ -295,6 +295,43 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 						}
 					}
 				}
+				
+				/*Default ScoreFeed*/
+				if (ranked) /*Check if score is on ranked map */ {
+					if (missedNotes == 69) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {	
+						if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
+							let mapId = await getBeatSaverId(songHash);
+							console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
+							if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
+								getRank(id).then(function(result) {
+									ur = result[0];
+									cr = result[1];
+									console.log("Above score got submitted.");
+									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
+								});
+							}
+						}
+					}
+				}
+					
+				
+				/*Default ScoreFeed*/
+				if (ranked) /*Check if score is on ranked map */ {
+					if (badCuts == 69) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {	
+						if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
+							let mapId = await getBeatSaverId(songHash);
+							console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
+							if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
+								getRank(id).then(function(result) {
+									ur = result[0];
+									cr = result[1];
+									console.log("Above score got submitted.");
+									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc); //Send message to Discord
+								});
+							}
+						}
+					}
+				}
 					
 				/* This can be removed */
 				if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F" && !ranked) /* Check if user passed FF9 */ {
