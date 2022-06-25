@@ -2,9 +2,9 @@
   "commandName": "score",
   "commandData": {
     "score": {
-      "id": 0, //Score ID (float)
+      "id": 0, //Score ID (int)
       "leaderboardPlayerInfo": {
-        "id": "0", //UserID (float)
+        "id": "0", //UserID (int)
         "name": "Name", //User Name (String)
         "profilePicture": "", //ProfilePicture (URL-string)
         "country": "", //Profile Country (string)
@@ -12,9 +12,9 @@
         "badges": "", //Profile Badges (array) [image: "","description": ""]
         "role": null //Profille Role (array)
       },
-      "rank": 0, //Map rank (float)
-      "baseScore": 0, //Map Score (float)
-      "modifiedScore": 0, //Map Score (float)
+      "rank": 0, //Map rank (int)
+      "baseScore": 0, //Map Score (int)
+      "modifiedScore": 0, //Map Score (int)
       "pp": 0, //PP Gained (float)
       "weight": 0, //Weighted PP Gained (float)
       "modifiers": "", //Modfiers (string)
@@ -28,19 +28,19 @@
       "hasReplay": false //Replay available (bool)
     },
     "leaderboard": {
-      "id": 0, //(float)
+      "id": 0, //(int)
       "songHash": "", //Map-hash (string)
       "songName": "", //Map name (string)
       "songSubName": "", //Map subname (string)
       "songAuthorName": "", //Song author (string)
       "levelAuthorName": "", //Map author (string)
       "difficulty": {
-        "leaderboardId": 0, //Leaderboard ID (float)
-        "difficulty": 0, //Map diff (float) [1 = Easy, 3 = Normal, 5 = Hard, 7 = Expert, 9 = ExpertPlus]
+        "leaderboardId": 0, //Leaderboard ID (int)
+        "difficulty": 0, //Map diff (int) [1 = Easy, 3 = Normal, 5 = Hard, 7 = Expert, 9 = ExpertPlus]
         "gameMode": "Standard",  //Gamemode (string)
         "difficultyRaw": "" //Raw diw (string: _DIFF_gamemode)
       },
-      "maxScore": 0,
+      "maxScore": 0, //The max possible score reachable on the map (int)
       "createdDate": "2020-08-06T16:56:31.000Z", //Map creation date (timestamp)
       "rankedDate": "2021-09-27T12:59:07.000Z", //Map ranked date (timestamp)
       "qualifiedDate": "2021-09-16T18:18:03.000Z", //Map qualified date (timestamp)
@@ -50,8 +50,8 @@
       "loved": false, //Is mapped loved (bool)
       "maxPP": 0, //Max possible PP (float)
       "stars": 0, //Star rating (float)
-      "plays": 0, //Amount of plays (float)
-      "dailyPlays": 0, //Daily plays (float)
+      "plays": 0, //Amount of plays (int)
+      "dailyPlays": 0, //Daily plays (int)
       "positiveModifiers": false, //modifiers (bool)
       "playerScore": null, //Uknown?
       "coverImage": "URL", //Cover image (URL-string)
