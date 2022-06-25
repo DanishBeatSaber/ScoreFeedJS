@@ -28,7 +28,7 @@
       "hasReplay": false //Replay available (bool)
     },
     "leaderboard": {
-      "id": 0, //(int)
+      "id": 0, //Leaderboard-ID on ScoreSaber, for the specific diff (int)
       "songHash": "", //Map-hash (string)
       "songName": "", //Map name (string)
       "songSubName": "", //Map subname (string)
