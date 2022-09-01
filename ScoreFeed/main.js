@@ -300,7 +300,7 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				}
 				replayConstructor = await getReplay(id,songHash,songDiff);
 				if (replayConstructor === "0") {
-					var mapId = await getApi(songHash);
+					var mapId = await getBeatSaverId(songHash);
 					replayUrl = "https://www.replay.beatleader.xyz/?id="+mapId+"&difficulty="+songDiff+"&playerID="+id;
 				} else {
 				replayUrl = "https://replay.beatleader.xyz/?scoreId="+replayConstructor;
