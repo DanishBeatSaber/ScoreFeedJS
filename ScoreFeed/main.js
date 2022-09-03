@@ -201,7 +201,7 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				var maxScore = jsonObj.commandData.leaderboard.maxScore; //Max score
 				var coverImage = jsonObj.commandData.leaderboard.coverImage; //Cover image
 				var acc = ((baseScore / maxScore) * 100); //Calculates the acc
-				let replay = ""; //Replay
+				var replayurl = replayurl;
 				
 				switch (hmd) {
 					case 0:
@@ -241,7 +241,7 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 						fullCombo = "";
 						break;
 				} 
-				
+						
 				switch (songDiff) {
 					case 1:
 						songDiff = "Easy";
@@ -294,31 +294,29 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 						} else {
 						return data.id; }
 					} catch (error) {
-						// console.log(error);
+						// console.log("User doesn't have a replay for this song");
 						return "0";
 					}
 				}
-				replayConstructor = await getReplay(id,songHash,songDiff);
-				if (replayConstructor === "0") {
-					var mapId = await getBeatSaverId(songHash);
-					replayUrl = "https://www.replay.beatleader.xyz/?id="+mapId+"&difficulty="+songDiff+"&playerID="+id;
-				} else {
-				replayUrl = "https://replay.beatleader.xyz/?scoreId="+replayConstructor;
-				}
 
-				
 				/*Default ScoreFeed*/
 				if (ranked) /*Check if score is on ranked map */ {
 					if (rank <= process.env.SS_MAPRANK || weight >= process.env.SS_PPWeight) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {	
 						if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
 							let mapId = await getBeatSaverId(songHash);
+							var replayConstructor = await getReplay(id,songHash,songDiff);
+							if (replayConstructor === "0") {
+								replayUrl = "https://www.replay.beatleader.xyz/?id="+mapId+"&difficulty="+songDiff+"&playerID="+id;
+							} else {
+							replayUrl = "https://replay.beatleader.xyz/?scoreId="+replayConstructor;
+							}
 							console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
 							if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
 								getRank(id).then(function(result) {
 									ur = result[0];
 									cr = result[1];
 									console.log("Above score got submitted.");
-										sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,1,replay); //Send message to Discord
+								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,1,replayUrl); //Send message to Discord
 								});
 							}
 						}
@@ -336,7 +334,7 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 									ur = result[0];
 									cr = result[1];
 									console.log("Above score got submitted.");
-									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,0); //Send message to Discord
+								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,0); //Send message to Discord
 								});
 							}
 						}
@@ -346,13 +344,13 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				/* This can be removed */
 				if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F" && !ranked) /* Check if user passed FF9 */ {
 					let mapId = await getBeatSaverId(songHash);
-					console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
-					if (country == process.env.SS_COUNTRY) /*Check if Danish */{	
+						console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
+						if (country == process.env.SS_COUNTRY) /*Check if Danish */{	
 						getRank(id).then(function(result) {
 							ur = result[0];
 							cr = result[1];
 							console.log("Above score got submitted.");
-							sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,0); //Send message to Discord
+								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,0); //Send message to Discord
 						});
 					}
 				}
