@@ -7,7 +7,7 @@ const XMLHttpRequest = require('xhr2');
 
 function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,ranked,replayurl) {
 	var id = id; //id
-	var name = name; //name
+	var name = name.replace(/[^a-zA-Z0-9\s!?]+/g, ''); //name
 	var pfp = pfp; //pfp
 	var country = country; //country
 	var rank = rank; //rank
