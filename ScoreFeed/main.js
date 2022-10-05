@@ -303,21 +303,23 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				if (ranked) /*Check if score is on ranked map */ {
 					if (rank <= process.env.SS_MAPRANK || weight >= process.env.SS_PPWeight) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {	
 						if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
-							let mapId = await getBeatSaverId(songHash);
-							var replayConstructor = await getReplay(id,songHash,songDiff);
-							if (replayConstructor === "0") {
-								replayUrl = "https://www.replay.beatleader.xyz/?id="+mapId+"&difficulty="+songDiff+"&playerID="+id;
-							} else {
-							replayUrl = "https://replay.beatleader.xyz/?scoreId="+replayConstructor;
-							}
-							console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
-							if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
-								getRank(id).then(function(result) {
-									ur = result[0];
-									cr = result[1];
-									console.log("Above score got submitted.");
-								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,1,replayUrl); //Send message to Discord
-								});
+							if (pp >= process.env.PP_MINIMUM) {
+								let mapId = await getBeatSaverId(songHash);
+								var replayConstructor = await getReplay(id,songHash,songDiff);
+								if (replayConstructor === "0") {
+									replayUrl = "https://www.replay.beatleader.xyz/?id="+mapId+"&difficulty="+songDiff+"&playerID="+id;
+								} else {
+								replayUrl = "https://replay.beatleader.xyz/?scoreId="+replayConstructor;
+								}
+								console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
+								if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
+									getRank(id).then(function(result) {
+										ur = result[0];
+										cr = result[1];
+										console.log("Above score got submitted.");
+									sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,1,replayUrl); //Send message to Discord
+									});
+								}
 							}
 						}
 					}
