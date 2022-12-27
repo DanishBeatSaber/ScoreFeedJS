@@ -262,10 +262,16 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 
 				async function getRank(id) {
 					try {
-						const response = await fetch("https://new.scoresaber.com/api/player/"+id+"/basic");
+						const response = await fetch("https://scoresaber.com/api/player/76561198086326146/basic", {
+							method: 'GET',
+							headers: {
+								'Content-Type': 'application/json',
+								'User-Agent': 'NodeJS/1.0.0 (ScoreFeed)'
+							}
+						});
 						const data = await response.json();
-						var rank = data.playerInfo.rank;
-						var countryRank = data.playerInfo.countryRank;
+						var rank = data.rank;
+						var countryRank = data.countryRank;
 						return [rank, countryRank];
 					} catch (error) {
 						console.log(error);
