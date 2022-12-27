@@ -1,13 +1,11 @@
-// Setup our environment variables via dotenv
 require('dotenv').config()
-// Import relevant modules
 const WebSocket = require('ws');
 const fetch = require('node-fetch');
 const XMLHttpRequest = require('xhr2');
 
 function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,ranked,replayurl) {
 	var id = id; //id
-	var name = name.replace(/[^a-zA-Z0-9\s!?]+/g, ''); //name
+	var name = name.replace(/[\u0250-\ue007]/g, ''); //name
 	var pfp = pfp; //pfp
 	var country = country; //country
 	var rank = rank; //rank
@@ -164,12 +162,12 @@ function sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNote
 }
 
 function connect() {
-	var TAsock = new WebSocket("wss://scoresaber.com/ws"); // Open WebSocket to ScoreSaber
-	TAsock.onopen = function(event) { //When socket is open, do this
-	console.log("WE ARE CONNECTED BOIS"); // log that the connection was made
+	var SSSock = new WebSocket("wss://scoresaber.com/ws"); // Open WebSocket to ScoreSaber
+	SSSock.onopen = function(event) { //When socket is open, do this
+	console.log("We're in!"); // log that the connection was made
 	};
 
-TAsock.onmessage = async function(event) { // event.data is the message
+SSSock.onmessage = async function(event) { // event.data is the message
 if (event.data !== "Connected to the ScoreSaber WSS") {
 jsonObj = JSON.parse(event.data); // parse the message as JSON
 
@@ -294,7 +292,6 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 						} else {
 						return data.id; }
 					} catch (error) {
-						// console.log("User doesn't have a replay for this song");
 						return "0";
 					}
 				}
@@ -324,74 +321,21 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 						}
 					}
 				}
-				
-				/*69 MISS/BADCUTS ScoreFeed*/
-				if (ranked) /*Check if score is on ranked map */ {
-					if (missedNotes == 69 || badCuts == 69) /*Check if the player have missed exactly 69 notes */ {	
-						if (country == process.env.SS_COUNTRY) /*Check if user is from set country */{
-							let mapId = await getBeatSaverId(songHash);
-							console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
-							if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
-								getRank(id).then(function(result) {
-									ur = result[0];
-									cr = result[1];
-									console.log("Above score got submitted.");
-								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,0); //Send message to Discord
-								});
-							}
-						}
-					}
-				}
-					
-				/* This can be removed */
-				if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F" && !ranked) /* Check if user passed FF9 */ {
-					let mapId = await getBeatSaverId(songHash);
-						console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
-						if (country == process.env.SS_COUNTRY) /*Check if Danish */{	
-						getRank(id).then(function(result) {
-							ur = result[0];
-							cr = result[1];
-							console.log("Above score got submitted.");
-								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,0); //Send message to Discord
-						});
-					}
-				}
-							
-				if (ranked) /*Check if score is on ranked map */ {
-					if (country !== process.env.SS_COUNTRY) /*Check if not Danish potato */{
-						if (acc == 69)  /*Check if very nice acc */{
-						let mapId = await getBeatSaverId(songHash);
-						console.log("Name: "+name+" | ID: "+id+" | Score: "+baseScore+" | ACC: "+acc+" | Song name: \""+songAuthorName+" - "+songName+"\" | Diff: "+songDiff+" | Map ID: "+mapId);
-							getRank(id).then(function(result) {
-								ur = result[0];
-								cr = result[1];
-								console.log("Above score got submitted.");
-								sendMessage(id,name,pfp,country,ur,cr,rank,pp,weight,badCuts,missedNotes,fullCombo,hmd,leaderboardId,mapId,songHash,songName,songSubName,songAuthorName,levelAuthorName,songDiff,stars,maxScore,coverImage,acc,0); //Send message to Discord
-							});
-						}
-					}
-				}
-				/* Down to here, just for fun stuff for Dane Saber */
 			}
 		}
 	}
 };
 
-TAsock.onclose = function(e) {
-  console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+SSSock.onclose = function(e) {
+  console.log('Socket is closed. Reconnect will be attempted in 10 seconds.', e.reason);
   setTimeout(function() {
     connect();
-  }, 1000);
+  }, 10000);
 };
 
- TAsock.onerror = function(err) {
+ SSSock.onerror = function(err) {
    console.error('Socket encountered error: ', err.message, 'Closing socket');
-  TAsock.close();
+  SSSock.close();
  };
-
-setInterval(function() {
-    TAsock.ping('Ping!');
-}, 120000); // 60 * 1000 milsec
-
 }
 connect();
