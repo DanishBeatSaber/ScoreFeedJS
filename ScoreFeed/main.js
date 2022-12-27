@@ -262,7 +262,7 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 
 				async function getRank(id) {
 					try {
-						const response = await fetch("https://scoresaber.com/api/player/76561198086326146/basic", {
+						const response = await fetch("https://scoresaber.com/api/player/"+id+"/basic", {
 							method: 'GET',
 							headers: {
 								'Content-Type': 'application/json',
