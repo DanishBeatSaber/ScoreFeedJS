@@ -1,16 +1,18 @@
 {
-  "name": "discordbot",
-  "version": "1.0.0",
-  "description": "private discordbot",
+  "name": "Dane Saber - ScoreFeed",
+  "version": "28.6.9",
+  "description": "ScoreFeed for Dane Saber",
   "main": "main.js",
   "scripts": {
     "start": "node main.js"
   },
-  "author": "@hawk",
+  "author": "@thanighthawk",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.0",
     "node-fetch": "^2.6.7",
+    "request": "^2.88.2",
+    "ws": "^8.8.0",
     "xhr2": "^0.2.1"
   }
 }
