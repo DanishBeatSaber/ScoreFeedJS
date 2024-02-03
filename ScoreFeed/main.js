@@ -187,7 +187,9 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				var badCuts = jsonObj.commandData.score.badCuts; //Bad cuts
 				var missedNotes = jsonObj.commandData.score.missedNotes; //Missed notes
 				var fullCombo = jsonObj.commandData.score.fullCombo; //Full combo
-				var hmd = jsonObj.commandData.score.hmd; //HMD
+				var hmd = jsonObj.commandData.score.deviceHmd; //HMD
+				var lController = jsonObj.commandData.score.deviceControllerLeft; //Left controller
+				var rController = jsonObj.commandData.score.deviceControllerRight; //Left controller
 				var leaderboardId = jsonObj.commandData.leaderboard.id; //Leaderboard ID
 				var songHash = jsonObj.commandData.leaderboard.songHash; //Song hash
 				var songName = jsonObj.commandData.leaderboard.songName; //Song name
@@ -201,34 +203,16 @@ jsonObj = JSON.parse(event.data); // parse the message as JSON
 				var acc = ((baseScore / maxScore) * 100); //Calculates the acc
 				var replayurl = replayurl;
 				
-				switch (hmd) {
-					case 0:
-						hmd = "Unknown";
-						break;
-					case 1:
-						hmd = "Oculus Rift CV1";
-						break;
-					case 2:
-						hmd = "HTC Vive";
-						break;
-					case 4:
-						hmd = "HTC Vive Pro";
-						break;
-					case 8:
-						hmd = "Windows Mixed Reality";
-						break;
-					case 16:
-						hmd = "Oculus Rift S";
-						break;
-					case 32:
-						hmd = "Oculus Quest 1/2";
-						break;
-					case 64:
-						hmd = "Valve Index";
-						break;
-					case 128:
-						hmd = "HTC Vive Cosmos";
-						break;
+				if (hmd === null || hmd === undefined) {
+					hmd = "Unknown";
+				}
+
+				if (lController === null || lController === undefined) {
+					lController = "Unknown";
+				}
+
+				if (rController === null || rController === undefined) {
+					rController = "Unknown";
 				}
 				
 				switch (fullCombo) {
