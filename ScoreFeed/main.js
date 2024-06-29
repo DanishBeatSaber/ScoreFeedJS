@@ -280,7 +280,7 @@ function connect() {
 
 					async function getRank(id) {
 						try {
-							const response = await fetch("https://scoresaber.com/api/player/"+id+"/basic", {
+							const response = await fetch("https://scoresaber.com/api/player/" + id + "/basic", {
 								method: 'GET',
 								headers: {
 									'Content-Type': 'application/json',
@@ -323,10 +323,11 @@ function connect() {
 						}
 					}
 
-					/*Default ScoreFeed*/
-					if (ranked) /*Check if score is on ranked map */ {
-						if (rank <= process.env.SS_MAPRANK || weight >= process.env.SS_PPWeight) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {
-							if (country == process.env.SS_COUNTRY) /*Check if user is from set country */ {
+					if (country == process.env.SS_COUNTRY) /*Check if user is from set country */ {
+
+						/*Default ScoreFeed*/
+						if (ranked) /*Check if score is on ranked map */ {
+							if (rank <= process.env.SS_MAPRANK || weight >= process.env.SS_PPWeight) /*Check if users maprank is lower between 1 and set maprank, or weighted PP is higher than set PP weight */ {
 								if (pp >= process.env.PP_MINIMUM) {
 									let mapId = await getBeatSaverId(songHash);
 									var replayConstructor = await getReplay(id, songHash, songDiff);
@@ -335,7 +336,7 @@ function connect() {
 									} else {
 										replayUrl = "https://replay.beatleader.xyz/?scoreId=" + replayConstructor;
 									}
-									console.log("Timestamp: " +new Date().toLocaleString()+ " | Name: " + name + " | ID: " + id + " | Score: " + baseScore + " | ACC: " + acc + " | Song name: \"" + songAuthorName + " - " + songName + "\" | Diff: " + songDiff + " | Map ID: " + mapId);
+									console.log("Timestamp: " + new Date().toLocaleString() + " | Name: " + name + " | ID: " + id + " | Score: " + baseScore + " | ACC: " + acc + " | Song name: \"" + songAuthorName + " - " + songName + "\" | Diff: " + songDiff + " | Map ID: " + mapId);
 									if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
 										getRank(id).then(function (result) {
 											ur = result[0];
@@ -346,56 +347,50 @@ function connect() {
 									}
 								}
 							}
-						}
-					}
 
-					/*69 MISS/BADCUTS ScoreFeed*/
-					if (ranked) /*Check if score is on ranked map */ {
-						if (missedNotes == 69 || badCuts == 69) /*Check if the player have missed exactly 69 notes */ {
-							if (country == process.env.SS_COUNTRY) /*Check if user is from set country */ {
+							/*69 MISS/BADCUTS ScoreFeed*/
+							if (missedNotes == 69 || badCuts == 69) /*Check if the player have missed exactly 69 notes */ {
 								let mapId = await getBeatSaverId(songHash);
-								console.log("Timestamp: " +new Date().toLocaleString()+ " | Name: " + name + " | ID: " + id + " | Score: " + baseScore + " | ACC: " + acc + " | Song name: \"" + songAuthorName + " - " + songName + "\" | Diff: " + songDiff + " | Map ID: " + mapId);
+								console.log("Timestamp: " + new Date().toLocaleString() + " | Name: " + name + " | ID: " + id + " | Score: " + baseScore + " | ACC: " + acc + " | Song name: \"" + songAuthorName + " - " + songName + "\" | Diff: " + songDiff + " | Map ID: " + mapId);
 								if (acc >= process.env.BS_ACC) /*Check if user acc is above set acc-requirement */ {
 									getRank(id).then(function (result) {
 										ur = result[0];
 										cr = result[1];
 										console.log("Above score got submitted.");
-										sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, 0); //Send message to Discord
+										sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, 0, ""); //Send message to Discord
 									});
 								}
 							}
 						}
-					}
 
-					/* This can be removed */
-					if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F" && !ranked) /* Check if user passed FF9 */ {
-						let mapId = await getBeatSaverId(songHash);
-						console.log("Timestamp: " +new Date().toLocaleString()+ " | Name: " + name + " | ID: " + id + " | Score: " + baseScore + " | ACC: " + acc + " | Song name: \"" + songAuthorName + " - " + songName + "\" | Diff: " + songDiff + " | Map ID: " + mapId);
-						if (country == process.env.SS_COUNTRY) /*Check if Danish */ {
+						if (songHash == "CB9F1581FF6C09130C991DB8823C5953C660688F" && !ranked) /* Check if user passed FF9 */ {
+							let mapId = await getBeatSaverId(songHash);
+							console.log("Timestamp: " + new Date().toLocaleString() + " | Name: " + name + " | ID: " + id + " | Score: " + baseScore + " | ACC: " + acc + " | Song name: \"" + songAuthorName + " - " + songName + "\" | Diff: " + songDiff + " | Map ID: " + mapId);
 							getRank(id).then(function (result) {
 								ur = result[0];
 								cr = result[1];
 								console.log("Above score got submitted.");
-								sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, 0); //Send message to Discord
+								sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, 0, ""); //Send message to Discord
 							});
 						}
+
 					}
 
 					if (ranked) /*Check if score is on ranked map */ {
 						if (country !== process.env.SS_COUNTRY) /*Check if not Danish potato */ {
 							if (acc == 69)  /*Check if very nice acc */ {
 								let mapId = await getBeatSaverId(songHash);
-								console.log("Timestamp: " +new Date().toLocaleString()+ " | Name: " + name + " | ID: " + id + " | Score: " + baseScore + " | ACC: " + acc + " | Song name: \"" + songAuthorName + " - " + songName + "\" | Diff: " + songDiff + " | Map ID: " + mapId);
+								console.log("Timestamp: " + new Date().toLocaleString() + " | Name: " + name + " | ID: " + id + " | Score: " + baseScore + " | ACC: " + acc + " | Song name: \"" + songAuthorName + " - " + songName + "\" | Diff: " + songDiff + " | Map ID: " + mapId);
 								getRank(id).then(function (result) {
 									ur = result[0];
 									cr = result[1];
 									console.log("Above score got submitted.");
-									sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, 0); //Send message to Discord
+									
+									sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, 0, ""); //Send message to Discord
 								});
 							}
 						}
 					}
-					/* Down to here, just for fun stuff for Dane Saber */
 				}
 			}
 		}
