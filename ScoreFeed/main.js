@@ -5,6 +5,37 @@ const WebSocket = require('ws');
 const fetch = require('node-fetch');
 const XMLHttpRequest = require('xhr2');
 
+/**
+ * sendMessage()
+ * @param {*} id 
+ * @param {*} name 
+ * @param {*} pfp 
+ * @param {*} country 
+ * @param {*} ur 
+ * @param {*} cr 
+ * @param {*} rank 
+ * @param {*} pp 
+ * @param {*} weight 
+ * @param {*} badCuts 
+ * @param {*} missedNotes 
+ * @param {*} fullCombo 
+ * @param {*} hmd 
+ * @param {*} leaderboardId 
+ * @param {*} mapId 
+ * @param {*} songHash 
+ * @param {*} songName 
+ * @param {*} songSubName 
+ * @param {*} songAuthorName 
+ * @param {*} levelAuthorName 
+ * @param {*} songDiff 
+ * @param {*} stars 
+ * @param {*} maxScore 
+ * @param {*} coverImage 
+ * @param {*} acc 
+ * @param {*} ranked 
+ * @param {*} replayurl 
+ */
+
 function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, ranked, replayurl) {
 	var id = id; //id
 	var name = name.replace(/[\u0250-\ue007]/g, ''); //name
@@ -163,13 +194,16 @@ function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, 
 	}
 }
 
+/**
+ * The connect-function, that starts the WebSocket connection
+ */
 function connect() {
-	var SSsock = new WebSocket("wss://scoresaber.com/ws"); // Open WebSocket to ScoreSaber
-	SSsock.onopen = function (event) { //When socket is open, do this
-		console.log("WE ARE CONNECTED BOIS"); // log that the connection was made
+	var SSSock = new WebSocket("wss://scoresaber.com/ws"); // Open WebSocket to ScoreSaber
+	SSSock.onopen = function (event) { //When socket is open, do this
+		console.log("We're in!"); // log that the connection was made
 	};
 
-	SSsock.onmessage = async function (event) { // event.data is the message
+	SSSock.onmessage = async function (event) { // event.data is the message
 		if (event.data !== "Connected to the ScoreSaber WSS") {
 			jsonObj = JSON.parse(event.data); // parse the message as JSON
 
@@ -250,10 +284,9 @@ function connect() {
 								method: 'GET',
 								headers: {
 									'Content-Type': 'application/json',
-									'User-Agent': 'ScoreFeed/6.9 (NodeJS)',
-								},
+									'User-Agent': 'NodeJS/1.0.0 (ScoreFeed)'
+								}
 							});
-
 							const data = await response.json();
 							var rank = data.rank;
 							var countryRank = data.countryRank;
@@ -286,7 +319,6 @@ function connect() {
 								return data.id;
 							}
 						} catch (error) {
-							// console.log("User doesn't have a replay for this song");
 							return "0";
 						}
 					}
@@ -369,21 +401,20 @@ function connect() {
 		}
 	};
 
-	SSsock.onclose = function (e) {
-		console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+	SSSock.onclose = function (e) {
+		console.log('Socket is closed. Reconnect will be attempted in 10 seconds.', e.reason);
 		setTimeout(function () {
 			connect();
-		}, 1000);
+		}, 10000);
 	};
 
-	SSsock.onerror = function (err) {
+	SSSock.onerror = function (err) {
 		console.error('Socket encountered error: ', err.message, 'Closing socket');
-		SSsock.close();
+		SSSock.close();
 	};
-
-	setInterval(function () {
-		SSsock.ping('Ping!');
-	}, 120000);
-
 }
+
+/**
+ * Triggers the connect function.
+ */
 connect();
