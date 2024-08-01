@@ -332,7 +332,7 @@ function connect() {
 									let mapId = await getBeatSaverId(songHash);
 									var replayConstructor = await getReplay(id, songHash, songDiff);
 									if (replayConstructor === "0") {
-										replayUrl = "https://www.replay.beatleader.xyz/?id=" + mapId + "&difficulty=" + songDiff + "&playerID=" + id;
+										replayUrl = "https://replay.beatleader.xyz/?id=" + mapId + "&difficulty=" + songDiff + "&playerID=" + id;
 									} else {
 										replayUrl = "https://replay.beatleader.xyz/?scoreId=" + replayConstructor;
 									}
