@@ -6,7 +6,12 @@ The Scorefeed-code originally made for #scores-feed on Dane Saber Discord
 
 To put it simply, ScoreFeedJS hooks into the ScoreSaber Websocket for their [Scores-page](https://scoresaber.com/scores), and with some configuration, it posts the desired scores to a Discord-textchannel: <br />
 
+## V1 Example
 <img src="./Preview.png" />
+
+## V2 Example
+<img src="./v2.png" />
+
 
 # How to run
 
