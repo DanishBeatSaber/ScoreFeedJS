@@ -180,6 +180,14 @@ function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, 
 			  ] : [
 				{
 				  type: 2,
+				  style: 4,
+				  label: `${difficulty}`,
+				  emoji: { name: "DIFF", id: "1366520018044715158" },
+				  disabled: true,
+				  custom_id: "diff_id",
+				},
+				{
+				  type: 2,
 				  style: 3,
 				  label: `${acc.toFixed(2)}% ${fullCombo === "FC" ? "FC" : `(${badCuts} Badcuts/${missedNotes} Misses)`}`,
 				  emoji: { name: "🎯", id: null },
