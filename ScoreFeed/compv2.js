@@ -55,9 +55,10 @@ const XMLHttpRequest = require('xhr2');
  * @param {*} ranked 
  * @param {*} replayurl
  * @param (*) gameMode
+ * @param (*) ranked
  */
 
-function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, ranked, replayurl, gameMode) {
+function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, ranked, replayurl, gameMode, ranked) {
 	var id = id; //id
 	var name = name.replace(/[\u0250-\ue007]/g, ''); //name
 	var pfp = pfp; //pfp
@@ -85,16 +86,11 @@ function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, 
 	var replayurl = replayurl;
 	var replayDisabled = "";
 	var gameMode = gameMode;
-	var disableComponents = false;
 
 	if (rank < 500 && isRanked == 1) {
 		replayDisabled = false;
 	} else {
 		replayDisabled = true;
-	}
-
-	if (isRanked == 0) {
-		disableComponents = true;
 	}
 
 	if (rank == 1) { //If rank 1
@@ -152,7 +148,7 @@ function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, 
 			{ type: 14, divider: true, spacing: 2 },
 			{
 			  type: 1,
-			  components: disableComponents ? [
+			  components: ranked ? [
 				{
 				  type: 2,
 				  style: 4,
@@ -457,7 +453,7 @@ function connect() {
 						ur = result[0];
 						cr = result[1];
 						console.log("Above score got submitted to FAD.");
-						sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, 1, replayUrl, gameMode); //Send message to Discord
+						sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, missedNotes, fullCombo, hmd, leaderboardId, mapId, songHash, songName, songSubName, songAuthorName, levelAuthorName, songDiff, stars, maxScore, coverImage, acc, 1, replayUrl, gameMode, ranked); //Send message to Discord
 					});
 				}
 			}
