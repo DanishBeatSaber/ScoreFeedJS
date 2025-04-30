@@ -84,12 +84,17 @@ function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, 
 	var isRanked = ranked;
 	var replayurl = replayurl;
 	var replayDisabled = "";
-	var gamemode = gameMode;
+	var gameMode = gameMode;
+	var disableComponents = false;
 
 	if (rank < 500 && isRanked == 1) {
 		replayDisabled = false;
 	} else {
 		replayDisabled = true;
+	}
+
+	if (isRanked == 0) {
+		disableComponents = true;
 	}
 
 	if (rank == 1) { //If rank 1
@@ -147,7 +152,7 @@ function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, 
 			{ type: 14, divider: true, spacing: 2 },
 			{
 			  type: 1,
-			  components: isRanked ? [
+			  components: disableComponents ? [
 				{
 				  type: 2,
 				  style: 4,
