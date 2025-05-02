@@ -25,6 +25,10 @@ const XMLHttpRequest = require('xhr2');
  	port: 1200,
 });
 
+function removeEscapeSequences(input) {
+	return input.replace(/[\b\f\n\r\t\v\\]/g, '');
+}
+
 /**
  * sendMessage()
  * @param {*} id 
@@ -72,10 +76,10 @@ function sendMessage(id, name, pfp, country, ur, cr, rank, pp, weight, badCuts, 
 	var hmd = hmd; //hmd
 	var leaderboardId = leaderboardId; //leaderboardId
 	var songHash = songHash; //songHash
-	var songName = songName; //songName
-	var songSubName = songSubName; //songSubName
-	var songAuthorName = songAuthorName; //songAuthorName
-	var levelAuthorName = levelAuthorName; //levelAuthorName
+	var songName = removeEscapeSequences(songName); //songName
+	var songSubName = removeEscapeSequences(songSubName); //songSubName
+	var songAuthorName = removeEscapeSequences(songAuthorName); //songAuthorName
+	var levelAuthorName = removeEscapeSequences(levelAuthorName); //levelAuthorName
 	var difficulty = songDiff; //difficulty
 	var stars = stars; //stars
 	var maxScore = maxScore; //maxScore
