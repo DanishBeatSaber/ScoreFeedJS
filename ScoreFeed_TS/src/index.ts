@@ -50,6 +50,8 @@ async function connectWebSocket() {
     if (data.toString() === "Connected to the ScoreSaber WSS") return;
 
     const jsonObj = JSON.parse(data.toString());
+    
+    if (jsonObj.commandName !== "score") return;
 
     if (
       jsonObj.commandData.score.leaderboardPlayerInfo.country !==
@@ -57,7 +59,6 @@ async function connectWebSocket() {
       process.env.LIMIT_BY_COUNTRY
     )
       return;
-    if (jsonObj.commandName !== "score") return;
 
     const player: PlayerInfo = {
       id: jsonObj.commandData.score.leaderboardPlayerInfo.id,
