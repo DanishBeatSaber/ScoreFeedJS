@@ -96,11 +96,7 @@ async function connectWebSocket() {
             song
         };
 
-        if (process.env.RANKED_ONLY && song.ranked) {
-            if (score.mapRank <= process.env.SS_MAPRANK || score.ppWeight >= process.env.SS_PPWeight) {
-                await handler(messageData as MessageType);
-            }
-        } else if (!process.env.RANKED_ONLY) {
+        if (process.env.RANKED_ONLY && song.ranked || !process.env.RANKED_ONLY) {
             if (score.mapRank <= process.env.SS_MAPRANK || score.ppWeight >= process.env.SS_PPWeight) {
                 await handler(messageData as MessageType);
             }
