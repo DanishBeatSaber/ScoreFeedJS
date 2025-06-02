@@ -50,12 +50,12 @@ async function connectWebSocket() {
     if (data.toString() === "Connected to the ScoreSaber WSS") return;
 
     const jsonObj = JSON.parse(data.toString());
-    
+
     if (jsonObj.commandName !== "score") return;
 
     if (
       jsonObj.commandData.score.leaderboardPlayerInfo.country !==
-        process.env.SS_COUNTRY &&
+      process.env.SS_COUNTRY &&
       process.env.LIMIT_BY_COUNTRY
     )
       return;
@@ -116,13 +116,17 @@ async function connectWebSocket() {
   });
 
   sSocket.on("close", async (code: number, reason: string) => {
-    console.log(
-      `[${new Date().toLocaleString()}] WebSocket closed with code ${code} and reason: ${reason}`,
-    );
+    console.log(`[${new Date().toLocaleString()}] WebSocket closed with code ${code} and reason: ${reason}`);
     setTimeout(function () {
       connectWebSocket();
     }, 10000);
   });
+
+  sSocket.on("error", (error: Error) => {
+    console.error(`[${new Date().toLocaleString()}] WebSocket error: ${error.message}`);
+    sSocket.close();
+  });
+
 }
 
 connectWebSocket();
