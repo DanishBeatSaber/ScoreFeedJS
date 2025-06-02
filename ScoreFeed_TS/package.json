@@ -1,0 +1,35 @@
+{
+  "name": "scorefeed_typescript",
+  "version": "0.0.1a",
+  "description": "ScoreFeed for Dane Saber written in TypeScript",
+  "license": "MIT",
+  "author": "@thanighthawk",
+  "scripts": {
+    "format": "prettier --write ./**/*.ts",
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc -p .",
+    "prod": "tsc -p . && node dist/index.js",
+    "d:start": "docker compose up -d",
+    "d:build": "docker compose build",
+    "d:stop": "docker compose down",
+    "d:res": "docker compose down && docker compose up -d",
+    "d:r": "yarn d:stop && yarn d:build",
+    "d:rb": "yarn d:stop && yarn d:build && yarn d:start"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.2",
+    "@types/ws": "^8.18.1"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "ws": "^8.18.2",
+    "xhr2": "^0.2.1"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}
