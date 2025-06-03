@@ -2,13 +2,6 @@
 The TypeScript-version of ScoreFeed
 <br />
 
-# What is this?
-
-To put it simply, ScoreFeed_TS hooks into the ScoreSaber Websocket for their [Scores-page](https://scoresaber.com/scores), and with some configuration, it posts the desired scores to a Discord-textchannel: <br />
-
-## Example
-<img src="../v2.png" />
-
 # READ ME FIRST, PLEASE!
 > [!CAUTION]
 > Due to the way that components work on Discord-messages, you **need** a Discord-webhook created by a Discord application.  
@@ -25,9 +18,12 @@ After reading this, and you still can't get it to work, feel free to raise an is
 
 In the issue, please state what you have already done, and what problem you're facing, thank you!
 
+## Example
+<img src="../v2.png" />
+
 # How to run
 
-Run `npm install` or `yarn` in the `ScoreFeedTS`-folder
+Run `npm install` or `yarn` in the `ScoreFeed_TS`-folder
 
 Configure `.env`
 
