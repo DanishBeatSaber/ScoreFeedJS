@@ -6,20 +6,16 @@ The TypeScript-version of ScoreFeed
 
 To put it simply, ScoreFeed_TS hooks into the ScoreSaber Websocket for their [Scores-page](https://scoresaber.com/scores), and with some configuration, it posts the desired scores to a Discord-textchannel: <br />
 
-## V1 Example
-<img src="../Preview.png" />
-
-## V2 Example
+## Example
 <img src="../v2.png" />
-
 
 # How to run
 
-Run `npm install` or `yarn` in the `ScoreFeed`-root folder
+Run `npm install` or `yarn` in the `ScoreFeedTS`-folder
 
 Configure `.env`
 
-Run `npm run prod` or `yarn prod` in the `ScoreFeed`-root folder
+Run `npm run prod` or `yarn prod` in the `ScoreFeed_TS`-folder
 
 # Why doesn't my buttons show?
 
