@@ -2,8 +2,8 @@
 The Scorefeed-code originally made for #scores-feed on Dane Saber Discord
 <br />
 
-JavaScript-version can be found [here](https://github.com/DanishBeatSaber/ScoreFeedJS/tree/main/ScoreFeed) (Please go for the TypeScript-version, it's easier to work with :>)
-TypeScript-version can be found [here](https://github.com/DanishBeatSaber/ScoreFeedJS/blob/main/ScoreFeed_TS)
+JavaScript-version can be found [here](https://github.com/DanishBeatSaber/ScoreFeedJS/tree/main/ScoreFeed) (Please go for the TypeScript-version, it's easier to work with :>)  
+TypeScript-version can be found [here](https://github.com/DanishBeatSaber/ScoreFeedJS/blob/main/ScoreFeed_TS)  
 
 # What is this?
 
