@@ -200,13 +200,18 @@ export default async function sendMessage(data: MessageType) {
         flags: 32768
     };
 
-    // await axios.post(process.env.DISCORD_WEBHOOK || "", JSON.stringify(params), {
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    // });
+    try {
+        await axios.post(process.env.DISCORD_WEBHOOK || "", JSON.stringify(params), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        console.log(`[${new Date().toLocaleString()}] Name: ${playerInfo.name} | ID: ${playerInfo.id} | Score: ${scoreInfo.nonWeightedPP.toFixed(2)}pp | ACC: ${scoreInfo.accuracy.toFixed(2)}% | Song name: "${songInfo.songName}" | Diff: ${songInfo.songDiff} | Map ID: ${songInfo.mapId}`);
+        return;
+    } catch (error) {
+        console.error(`[${new Date().toLocaleString()}] Error sending message to Discord webhook:`, error);
+        return;
+    }
 
-    console.log(`[${new Date().toLocaleString()}] Name: ${playerInfo.name} | ID: ${playerInfo.id} | Score: ${scoreInfo.nonWeightedPP.toFixed(2)}pp | ACC: ${scoreInfo.accuracy.toFixed(2)}% | Song name: "${songInfo.songName}" | Diff: ${songInfo.songDiff} | Map ID: ${songInfo.mapId}`);
-
-    return;
 }
