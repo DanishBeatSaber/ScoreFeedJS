@@ -53,6 +53,31 @@ export default async function sendMessage(data: MessageType) {
                             scoreInfo.mapRank <= 100 ? "#2ECC71" :
                                 "#9CFFF4";
 
+    /*
+    * Remove all /r /n /t from every string in playerInfo, scoreInfo, and songInfo
+    * @description This is to ensure that the embed message does not contain any unwanted line breaks or tabs.
+    */
+    Object.keys(playerInfo).forEach(key => {
+        const typedKey = key as keyof PlayerInfo;
+        if (typeof playerInfo[typedKey] === 'string') {
+            (playerInfo as any)[typedKey] = (playerInfo[typedKey] as string).replace(/[\r\n\t]/g, '');
+        }
+    });
+
+    Object.keys(scoreInfo).forEach(key => {
+        const typedKey = key as keyof ScoreInfo;
+        if (typeof scoreInfo[typedKey] === 'string') {
+            (scoreInfo as any)[typedKey] = (scoreInfo[typedKey] as string).replace(/[\r\n\t]/g, '');
+        }
+    });
+
+    Object.keys(songInfo).forEach(key => {
+        const typedKey = key as keyof SongInfo;
+        if (typeof songInfo[typedKey] === 'string') {
+            (songInfo as any)[typedKey] = (songInfo[typedKey] as string).replace(/[\r\n\t]/g, '');
+        }
+    });
+
     /**
      * @variable embedComponents
      * @description Constructs the components for the embed message, including player and song information, score details, and action buttons.
