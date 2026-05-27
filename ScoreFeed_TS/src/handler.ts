@@ -2,7 +2,6 @@ import sendMessage from "./helpers/sendMessage";
 import getBeatSaverId from "./helpers/getMap";
 import getRank from "./helpers/getRank";
 import { MessageType, PlayerInfo, ScoreInfo, SongInfo } from "./helpers/types";
-import getReplay from "./helpers/getReplay";
 
 export default async function handler(data: MessageType) {
   const player: PlayerInfo = data.player;
@@ -41,7 +40,6 @@ export default async function handler(data: MessageType) {
   song.mapId = await getBeatSaverId(song.songHash);
 
   setTimeout(async () => {
-    score.replayUrl = await getReplay(player.id, song.songHash, rawDiff);
     sendMessage({ player, score, song });
   }, 1000);
 
