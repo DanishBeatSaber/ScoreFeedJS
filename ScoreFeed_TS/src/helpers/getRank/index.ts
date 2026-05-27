@@ -1,6 +1,6 @@
 export default async function getRank(id: string): Promise<[number, number]> {
     try {
-        const response = await fetch("https://scoresaber.com/api/player/" + id + "/basic", {
+        const response = await fetch("https://scoresaber.com/api/v2/players/" + id + "/basic", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -8,8 +8,8 @@ export default async function getRank(id: string): Promise<[number, number]> {
             }
         });
         const data = await response.json();
-        var globalRank = data.rank;
-        var localRank = data.countryRank;
+        var globalRank = data.stats.rank;
+        var localRank = data.stats.countryRank;
 
         return [globalRank, localRank];
     } catch (error) {
