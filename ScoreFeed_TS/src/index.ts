@@ -82,7 +82,7 @@ async function connectWebSocket() {
       missedNotes: jsonObj.commandData.score.missedNotes,
       fullCombo: jsonObj.commandData.score.fullCombo,
       maxScore: jsonObj.commandData.leaderboard.maxScore,
-      replayUrl: null,
+      replayUrl: `https://watch.scoresaber.com/?ssScoreId=${jsonObj.commandData.score.id}&autoPlay=false`,
     };
 
     const song: SongInfo = {
